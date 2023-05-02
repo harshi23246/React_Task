@@ -1,0 +1,14 @@
+.books{
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px 0;
+    justify-content: space-evenly;
+}
+
+.show-more{
+    background: none;
+    border: none;
+    margin: 20px auto;
+    font-weight: bold;
+    font-size: 16px;
+}
