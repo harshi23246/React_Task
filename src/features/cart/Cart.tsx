@@ -29,10 +29,10 @@ function Cart(){
     const totalCost=items.reduce((acc,item)=>{
         return acc + (item.price*item.quantity);
     },0.0);
-    
-    const totalTax=totalCost*0.18;
-    const shippingCharges=items.length > 0 ? 5:0;
-    const totalToPay=totalCost + totalTax + shippingCharges;
+
+    // const totalTax=totalCost*0.18;
+    // const shippingCharges=items.length > 0 ? 5:0;
+    // const totalToPay=totalCost + totalTax + shippingCharges;
     //const address1=useAppSelector(state=>state.address);
     const add:any=localStorage.getItem("address") as any
     const address2=JSON.parse(add)  
@@ -50,6 +50,21 @@ function Cart(){
             setaddress(address2)
         }
     },[])
+
+    const CalculationMethod=(type:any)=>{
+        const totalTax=totalCost*0.18;
+        const shippingCharges=items.length > 0 ? 5:0;
+        const totalToPay=totalCost + totalTax + shippingCharges;
+        if(type==="tax"){
+            return totalTax.toFixed(2)
+        }
+        if(type==="shipping"){
+            return shippingCharges.toFixed(2)
+        }
+        if(type==="pay"){
+            return totalToPay.toFixed(2)
+        }
+    }
 
 
     return <div className="cart">
@@ -94,16 +109,16 @@ function Cart(){
             </div>
             <div className='invoice'>
                 <span>Tax</span>
-                <span className='right'>${totalTax.toFixed(2)}</span>
+                <span className='right'>${CalculationMethod("tax")}</span>
             </div>
             <div className='invoice'>
                 <span>Shipping Charge</span>
-                <span className='right'>${shippingCharges.toFixed(2)}</span>
+                <span className='right'>${CalculationMethod("shipping")}</span>
             </div>
             <hr />
             <div className='invoice'>
                 <span>Total</span>
-                <span className='right'>${totalToPay.toFixed(2)}</span>
+                <span className='right'>${CalculationMethod("pay")}</span>
             </div>
             <button className='pay-btn' onClick={()=>{
                     if(items.length > 0){
